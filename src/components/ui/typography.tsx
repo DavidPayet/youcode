@@ -1,21 +1,21 @@
-import { VariantProps, cva } from 'class-variance-authority';
+import { VariantProps, cva } from 'class-variance-authority'
 import type {
   ComponentPropsWithoutRef,
   ElementType,
   PropsWithChildren,
-} from 'react';
-import { cn } from '../../lib/utils';
+} from 'react'
+import { cn } from '../../lib/utils'
 
 type PolymorphicAsProp<E extends ElementType> = {
   as?:
     | E
     | React.ComponentType<Omit<ComponentPropsWithoutRef<E>, 'as'>>
-    | React.FunctionComponent<Omit<ComponentPropsWithoutRef<E>, 'as'>>;
-};
+    | React.FunctionComponent<Omit<ComponentPropsWithoutRef<E>, 'as'>>
+}
 
 type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   Omit<ComponentPropsWithoutRef<E>, 'as'> & PolymorphicAsProp<E>
->;
+>
 
 const typographyVariants = cva('', {
   variants: {
@@ -37,10 +37,10 @@ const typographyVariants = cva('', {
   defaultVariants: {
     variant: 'base',
   },
-});
-type TypographyCvaProps = VariantProps<typeof typographyVariants>;
+})
+type TypographyCvaProps = VariantProps<typeof typographyVariants>
 
-const defaultElement = 'p';
+const defaultElement = 'p'
 
 const defaultElementMapping: Record<
   NonNullable<TypographyCvaProps['variant']>,
@@ -58,7 +58,7 @@ const defaultElementMapping: Record<
   muted: 'p',
   link: 'a',
   base: 'p',
-} as const;
+} as const
 
 export function Typography<E extends ElementType = typeof defaultElement>({
   as,
@@ -68,7 +68,7 @@ export function Typography<E extends ElementType = typeof defaultElement>({
   ...restProps
 }: PolymorphicProps<E> & TypographyCvaProps) {
   const Component: ElementType =
-    as ?? defaultElementMapping[variant ?? 'base'] ?? defaultElement;
+    as ?? defaultElementMapping[variant ?? 'base'] ?? defaultElement
 
   return (
     <Component
@@ -77,5 +77,5 @@ export function Typography<E extends ElementType = typeof defaultElement>({
     >
       {children}
     </Component>
-  );
+  )
 }
