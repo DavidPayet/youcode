@@ -10,7 +10,6 @@ export type PaginationButtonProps = {
 }
 
 export const PaginationButton = (props: PaginationButtonProps) => {
-  console.log(props.totalPage)
 
   const router = useRouter()
   return (
@@ -20,7 +19,7 @@ export const PaginationButton = (props: PaginationButtonProps) => {
         size="sm"
         onClick={() => {
           const searchParams = new URLSearchParams({
-            page: String(props.page > 1 ? props.page - 1 : 0),
+            page: String(props.page - 1),
           })
           const url = `${props.baseUrl}?${searchParams.toString()}`
           router.push(url)
